@@ -14,11 +14,12 @@ def load_data(path, num_train):
     # Split the data into train and test sets after
     # num_train elements.
     ######################################################
-    winedata = genfromtxt(path, delimiter=';', skip_header=1)
-    X_temp1 = winedata[0:num_train,:11]
-    X_train = np.ones((X_temp1.shape[0], X_temp1.shape[1]+1))
-    X_train[:,:-1] = X_temp1
-    Y_train = winedata[0:num_train,11:]
+    winedata = genfromtxt(path, delimiter=';', skip_header=1) #The index(1st) row is removed from data
+    X_temp1 = winedata[0:num_train,:11]                       #selecting 3674 rows and excluding                                                                        quality(output) column
+    X_train = np.ones((X_temp1.shape[0], X_temp1.shape[1]+1)) #creating a matrix of ones
+    X_train[:,:-1] = X_temp1                                  #adding a column of 1(bias)
+    Y_train = winedata[0:num_train,11:]                       #selecting quality column as output data
+    #following similar procedure to create test set of 1224 samples
     X_temp2 = winedata[num_train:,:11]
     X_test = np.ones((X_temp2.shape[0], X_temp2.shape[1]+1))
     X_test[:,:-1] = X_temp2
