@@ -1,0 +1,3 @@
+Please find the task statement in the notebook 'Forward.ipynb'.
+
+Please submit your implementation of 'modules.py' and the parameters of the XOR network stored in 'val.json' by sending the files to hartmut.bauermeister@uni-siegen.de. Use "DL 2019 <exercise_nbr>" as subject. Please provide the files (without parent folder!) in a zip-compressed folder with the name '<matriculation_number>_[<matriculation number>_]<exercise_number>.zip'. The submission deadline is Friday, 01.11.2019, 00:00. For further details on the submission formalities, visit https://www.vsa.informatik.uni-siegen.de/en/deep-learning-exercise-and-materials-0.
