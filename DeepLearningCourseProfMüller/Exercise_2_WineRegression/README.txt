@@ -1,3 +1,0 @@
-The task of Exercise 2 is to implement linear regression in Python. Please find the exact task statement in the notebook 'Wine.ipynb'. As a first step download the dataset from http://www3.dsi.uminho.pt/pcortez/wine/ and extract it into this folder.
-
-Please submit your implementation of 'linear_regression.py' by sending the file to hartmut.bauermeister@uni-siegen.de. Use "DL 2019 <exercise_nbr>" as subject. Please provide the file in a zip-compressed folder with the name '<matriculation_number>_[<matriculation number>_]<exercise_number>.zip'. The submission deadline is Friday, 25.10.2019, 00:00.
