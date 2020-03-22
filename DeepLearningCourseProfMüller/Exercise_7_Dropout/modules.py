@@ -18,6 +18,7 @@ class Dropout(nn.Module):
             binomial = torch.distributions.binomial.Binomial(probs=1-self.p)
             return x * binomial.sample(x.size()) * (1.0/(1-self.p))          #return modified during
                                                                              #training
+            
         return x                                                             #return unmodified when not
                                                                              #training    
             
