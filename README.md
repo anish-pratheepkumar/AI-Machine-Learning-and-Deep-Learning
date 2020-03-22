@@ -1,4 +1,4 @@
-##DeepLearningStudy
+## DeepLearningStudy
 
 * DeepLearning Course by prof Müller - Exercises
 * DeepLearning with Python(François Chollet) - Exercises
