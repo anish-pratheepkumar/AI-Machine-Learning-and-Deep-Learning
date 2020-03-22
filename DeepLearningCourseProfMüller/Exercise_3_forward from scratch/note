@@ -1,5 +1,0 @@
-crosss entropy -loss fn - for classification problems
-soft max activation - gives o/p for discrete classification problems
-gives probability that the i/p belongs to a particular category. for a binary classification it gives 2 o/p and it sums to one.
-
-
