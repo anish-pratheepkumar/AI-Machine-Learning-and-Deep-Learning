@@ -39,7 +39,7 @@ The MNIST and CIFAR10 datasets are trained using Pytorch framework and the resul
 
 ### Exercise_8.2
 
-The concept of replacing the Fully Conected Layers (at the end of a CNN) to  Convlutional layers is implemented here. VGG network is used for the same. 
+The concept of replacing the Fully Conected Layers (at the end of a CNN) to  Convlutional layers is implemented here. 
 
 
 
