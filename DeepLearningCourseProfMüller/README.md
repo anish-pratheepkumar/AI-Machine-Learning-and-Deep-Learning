@@ -1,7 +1,7 @@
 # Deep Learning - Course by Prof Müller
 The exercises are based on the Deep Learning framework - Pytorch. Starting with introduction to python the exercises moves to implementing forward and backward propagation from scratch and in the end training MNIST and CIFAR10 data sets using CNN.
 
-### Exercise_1
+### [Exercise_1] (Exercise_1_Intro_Python&NumPy)
 
 This exercise focuses on familiarising the Python programming language and also understanding NumPy library.
 
