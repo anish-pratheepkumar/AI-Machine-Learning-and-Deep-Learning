@@ -21,7 +21,7 @@ Next the back propagation is implemented from scratch using Python. This is simi
 
 The Stochastic Gradient Descent(SGD) optimisation is implemented from scratch. Also an introduction to PYtorch is given in this Exercise.
 
-### Exercise_8
+### Exercise_6
 
 First section gives information regarding the parameter initialisation of a Network. Followed by implementation of Batch Normalisation.
 
