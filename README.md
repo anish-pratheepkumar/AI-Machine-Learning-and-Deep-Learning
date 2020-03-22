@@ -1,5 +1,5 @@
 ## DeepLearningStudy
 
-* DeepLearning Course - Exercises
-* DeepLearning with Python(François Chollet) - Exercises
-* Neural Networks and Deep Learning(Coursera) - Exercises
+* DeepLearning Course - Exercises using **Pytorch** DL Framework
+* DeepLearning with Python(François Chollet) - Exercises using **Keras** DL Framework
+
