@@ -1,0 +1,10 @@
+Fibonacci number f_0 = 0
+Fibonacci number f_1 = 1
+Fibonacci number f_2 = 1
+Fibonacci number f_3 = 2
+Fibonacci number f_4 = 3
+Fibonacci number f_5 = 5
+Fibonacci number f_6 = 8
+Fibonacci number f_7 = 13
+Fibonacci number f_8 = 21
+Fibonacci number f_9 = 34
