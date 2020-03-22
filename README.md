@@ -1,4 +1,5 @@
-# DeepLearningStudy
-InitialStudyFiles of DeepLearning,
-Exercises from DeepLearning Course by prof Müller,
-Studienarbeit - DeepLearning + Robotics
+##DeepLearningStudy
+
+*DeepLearning Course by prof Müller - Exercises
+*DeepLearning with Python(François Chollet) - Exercises
+*Neural Networks and Deep Learning(Coursera) - Exercises
