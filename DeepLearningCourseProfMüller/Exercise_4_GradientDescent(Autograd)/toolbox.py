@@ -96,8 +96,7 @@ class Mul(Function):
         self.t1.backward(grad)
         grad = dLdf * self.t1.data
         self.t2.backward(grad)
-        pass
-
+        
 
 class Div(Function):
     
@@ -116,8 +115,7 @@ class Div(Function):
         self.t1.backward(grad)
         grad = dLdf * -self.t1.data/(self.t2.data**2)
         self.t2.backward(grad)
-        pass
-
+       
             
 class Pow(Function):
     
@@ -150,12 +148,12 @@ class MatMul(Function):
     
     def backward(self, dLdf):
         # implement the backward pass of MatMul
-        grad = dLdf@(self.v.data.T) 
+        #grad = dLdf@(self.v.data.T) 
+        grad = dLdf @ np.moveaxis(self.v.data, -2, -1)
         self.M.backward(grad)
         grad = (self.M.data.T)@dLdf
         self.v.backward(grad)
-        pass
-
+        
 
 class ReLU(Function):
     
@@ -173,8 +171,7 @@ class ReLU(Function):
         var[var>0] = 1
         grad = var*dLdf
         self.t.backward(grad)
-        pass
-
+        
 def relu(t):
     return ReLU().forward(t)
 
@@ -194,8 +191,7 @@ class Exp(Function):
         # implement the backward pass of Exp
         grad = np.exp(self.t.data) * dLdf
         self.t.backward(grad)
-        pass
-
+        
 def exp(t):
     return Exp().forward(t)
 
@@ -214,8 +210,7 @@ class Log(Function):
         # implement the backward pass of Log
         grad = dLdf*(1/self.t.data)
         self.t.backward(grad)
-        pass
-
+        
 def log(t):
     return Log().forward(t)
 
@@ -252,8 +247,7 @@ class Mean(Function):
         # implement the backward pass of Mean
         grad = (1/self.t.data.size)*np.ones_like(self.t.data)
         self.t.backward(grad)
-        pass
-
+        
 
 class GetItem(Function):
     
@@ -272,5 +266,4 @@ class GetItem(Function):
         var[self.index] = 1
         grad = dLdf * var
         self.t.backward(grad)
-        pass
-
+        
