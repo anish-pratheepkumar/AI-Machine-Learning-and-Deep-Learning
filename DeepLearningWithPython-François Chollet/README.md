@@ -31,7 +31,11 @@ Here from a total of 4000 cats and dogs images a CNN is implemented to classify 
 
 * CatsVsDogs-PretrainedCNN
 
-Now a pretrained CNN - VGG16 is used on the same dataset and evaluated its performance. 
+Now a pretrained CNN - VGG16 is used on the same dataset and evaluated its performance.
+
+* CatsVsDogs-PretrainedCNN-withAugmentation_Colab
+
+Few base layers of pretrained VGG16 is set trainable and then the network is trained with the same input. Also the input data is subjected to regularisation - Augmentation. The accuracy of the network increases with this.
 
 * VisualiseCAM
 
