@@ -15,16 +15,17 @@ def load_data(path, num_train):
     # num_train elements.
     ######################################################
     winedata = genfromtxt(path, delimiter=';', skip_header=1) #The index(1st) row is removed from data
-    X_temp1 = winedata[0:num_train,:11]                       #selecting 3674 rows and excluding                                                                        quality(output) column
-    X_train = np.ones((X_temp1.shape[0], X_temp1.shape[1]+1)) #creating a matrix of ones
-    X_train[:,:-1] = X_temp1                                  #adding a column of 1(bias)
-    Y_train = winedata[0:num_train,11:]                       #selecting quality column as output data
-    #following similar procedure to create test set of 1224 samples
-    X_temp2 = winedata[num_train:,:11]
-    X_test = np.ones((X_temp2.shape[0], X_temp2.shape[1]+1))
-    X_test[:,:-1] = X_temp2
-    Y_test = winedata[num_train:,11:]
-    return (X_train,Y_train,X_test,Y_test)
+    
+    X = np.hstack((winedata[:, :-1], np.ones((winedata.shape[0], 1))))    # adding a column of 1(bias)
+    Y = winedata[:, -1]                                              # selecting quality column as output
+    
+    X_train = X[:num_train]                                       #select training features
+    Y_train = Y[:num_train]                                       #select corresponding training targets
+
+    X_test = X[num_train:]
+    Y_test = Y[num_train:]
+    
+    return X_train,Y_train,X_test,Y_test
 
 
 def fit(X, Y):
@@ -32,10 +33,10 @@ def fit(X, Y):
     # Return a vector theta containing the weights by
     # applying linear regression for data X and targets Y.
     ######################################################
-    Xtrans = X.transpose()
-    Ytrans = Y.transpose()
-    temp = np.dot(Ytrans,X)
-    theta = np.dot(np.linalg.inv(np.dot(Xtrans,X)),temp.transpose())
+    #Xtrans = X.T
+    #Ytrans = Y.T
+    temp = np.dot(Y.T,X)
+    theta = np.dot(np.linalg.inv(np.dot(X.T,X)),temp.T)
     return theta
 
 
