@@ -1,15 +1,15 @@
 # Deep Learning - Course by Prof Müller
 The exercises are based on the Deep Learning framework - Pytorch. Starting with introduction to python the exercises moves to implementing forward and backward propagation from scratch and in the end training MNIST and CIFAR10 data sets using CNN.
 
-### Exercise_1 [This is an absolute link to a nested folder](https://github.com/anish-pratheepkumar/GitDeepLearningStudy/tree/master/DeepLearningCourse-Uni/Exercise_1_Intro_Python%26NumPy)
+### Exercise_1 [_Intro_Python&NumPy](https://github.com/anish-pratheepkumar/GitDeepLearningStudy/tree/master/DeepLearningCourse-Uni/Exercise_1_Intro_Python%26NumPy)
 
 This exercise focuses on familiarising the Python programming language and also understanding NumPy library.
 
-### Exercise_2
+### Exercise_2[_WineRegression](https://github.com/anish-pratheepkumar/GitDeepLearningStudy/tree/master/DeepLearningCourse-Uni/Exercise_2_WineRegression)
 
 A regression problem is solved using wine data(3674 training data) in a .csv file, having 10 features of the wine and corresponding quality. Here a regression model is developed which can predict the quality of the wine when given the 10 input features.
 
-### Exercise_3
+### Exercise_3[_forward from scratch](https://github.com/anish-pratheepkumar/GitDeepLearningStudy/tree/master/DeepLearningCourse-Uni/Exercise_3_forward%20from%20scratch)
 
 Here the forward propagation concept in Neural Network is implemented from scratch using Python.
 
