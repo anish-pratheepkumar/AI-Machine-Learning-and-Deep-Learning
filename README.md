@@ -1,7 +1,7 @@
 ## DeepLearningStudy
 
-* DeepLearning Course - Exercises using **Pytorch** DL Framework
-* DeepLearning with Python - Exercises using **Keras(TensorFlow in Backend)** DL Framework
+* [DeepLearning Course](https://github.com/anish-pratheepkumar/GitDeepLearningStudy/tree/master/DeepLearningCourse-Uni) -  using **Pytorch** DL Framework
+* [DeepLearning with Python](https://github.com/anish-pratheepkumar/GitDeepLearningStudy/tree/master/DeepLearningWithPython) -  using **Keras(TensorFlow in Backend)** DL Framework
 
 
 NB: Also completed following courses:
