@@ -2,6 +2,8 @@
 
 * DeepLearning Course - Exercises using **Pytorch** DL Framework
 * DeepLearning with Python - Exercises using **Keras(TensorFlow in Backend)** DL Framework
+
+
 NB: Also completed following courses:
 1. [Neural Networks and Deep Learning - Coursera](https://coursera.org/share/7161842bdd376889625c947a9dfa2fe9)
 2. [Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization - Coursera](https://www.coursera.org/account/accomplishments/certificate/4E6XYNFU8LB5)
