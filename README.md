@@ -5,7 +5,7 @@
 
 ## MachineLearning
 
-* [MachineLearning] algorithms implementation on data with python(using NumPy, Pandas, Scikit-Learn etc.)(https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning)
+* [MachineLearning](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning)- algorithms implementation on data with python(using NumPy, Pandas, Scikit-Learn etc.)
 
 
 NB: Also completed following courses:
