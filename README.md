@@ -1,7 +1,11 @@
-## DeepLearningStudy
+## DeepLearning
 
 * [DeepLearning Course](https://github.com/anish-pratheepkumar/GitDeepLearningStudy/tree/master/DeepLearningCourse-Uni) -  using **Pytorch** DL Framework
 * [DeepLearning with Python](https://github.com/anish-pratheepkumar/GitDeepLearningStudy/tree/master/DeepLearningWithPython) -  using **Keras(TensorFlow in Backend)** DL Framework
+
+## MachineLearning
+
+* [MachineLearning] algorithms implementation on data with python(using NumPy, Pandas, Scikit-Learn etc.)(https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning)
 
 
 NB: Also completed following courses:
