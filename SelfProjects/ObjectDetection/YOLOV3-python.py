@@ -504,5 +504,5 @@ def process(image_name):
 
 
 if __name__ == "__main__":
-    image_name = 'zebra.jpg'
+    image_name = 'im3.jpg'
     process(image_name)
