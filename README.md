@@ -7,6 +7,9 @@
 
 * [MachineLearning](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning)- algorithms implementation on data with **python(using NumPy, Pandas, Scikit-Learn etc.)**
 
+## SelfProjects
+* [ObjectDetecton](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/SelfProjects/ObjectDetection) - YOLOV3
+
 
 NB: Completed the following courses:
 1. [Neural Networks and Deep Learning - Coursera](https://coursera.org/share/7161842bdd376889625c947a9dfa2fe9)
