@@ -2,12 +2,12 @@
 Created on Sat May 16 21:07:15 2020
 
 @author: anish pratheepkumar
+
+This is a work to implement and understand the experiencor version
+of YOLOV3 in Keras (Ref: https://github.com/experiencor/keras-yolo3)
 """
-# This is a work to recreate and understand the experiencor
-# implementation of YOLOV3 in Keras
 
 # import necessary libraries
-# import argparse
 import os
 import sys
 import numpy as np
@@ -504,5 +504,5 @@ def process(image_name):
 
 
 if __name__ == "__main__":
-    image_name = 'im3.jpg'
+    image_name = 'zebra.jpg'
     process(image_name)
