@@ -7,18 +7,14 @@ This is a work to implement and understand the experiencor version
 of YOLOV3 in Keras (Ref: https://github.com/experiencor/keras-yolo3)
 """
 
-# import necessary libraries
-import os
-import sys
+import struct
+import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.patches import Rectangle
 from tensorflow.keras.layers import Conv2D, Input, BatchNormalization, LeakyReLU, ZeroPadding2D, UpSampling2D
 from tensorflow.keras.layers import add, concatenate
 from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
-import struct
-#import cv2
-import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
 
 
 # defining convolutional block creation in terms of Darknet implementation
@@ -35,7 +31,7 @@ def _conv_block(inp, convs, skip=True):
         x = Conv2D(conv['filter'],
                    conv['kernel'],
                    strides=conv['stride'],
-                   padding='valid' if conv['stride'] > 1 else 'same',  # darknet padding style(only pad left and top)
+                   padding='valid' if conv['stride'] > 1 else 'same',
                    name='conv_' + str(conv['layer_idx']),
                    use_bias=False if conv['bnorm'] else True)(x)
         if conv['bnorm']: x = BatchNormalization(epsilon=0.001, name='bnorm_' + str(conv['layer_idx']))(x)
@@ -44,11 +40,7 @@ def _conv_block(inp, convs, skip=True):
     return add([skip_connection, x]) if skip else x
 
 
-# defining the YOLOV3 model, Here a 3 scale prediction is implemented
-# skip connections exists upto 74 layers(mainly in the backbone Darknet53)
-# Layer 82 prediction has shape of 13x13 and detects large objects
-# Layer 94 prediction has shape of 26x26 and detects medium objects
-# Layer 106 prediction has a shape of 52x52 and detects small objects
+# defining the YOLOV3 model
 def make_yolov3_model():
     input_image = Input(shape=(None, None, 3))
 
@@ -180,8 +172,8 @@ class WeightReader:
 
             binary = w_f.read()
 
-        self.offset = 0  # initialise local variable to collect bnorm parameters
-        self.all_weights = np.frombuffer(binary, dtype='float32')  # getting numpy array from the buffer file of weights
+        self.offset = 0
+        self.all_weights = np.frombuffer(binary, dtype='float32')
 
     def read_bytes(self, size):
         self.offset = self.offset + size
@@ -194,21 +186,18 @@ class WeightReader:
                 print("loading weights of convolution #" + str(i))
 
                 # collecting parameters of the batch norm layer for the corresponding conv layer
-                if i not in [81, 93,
-                             105]:  # list include layers prior to detection layer, these dont have batch normalisation
+                if i not in [81, 93, 105]:
                     norm_layer = model.get_layer('bnorm_' + str(i))
 
                     size = np.prod(norm_layer.get_weights()[0].shape)
-                    # the parameters beta&gamma of bnorm and the mean & var are collected from weight file
-                    beta = self.read_bytes(size)  # bias
-                    gamma = self.read_bytes(size)  # scale
-                    mean = self.read_bytes(size)  # mean
-                    var = self.read_bytes(size)  # variance
+                    beta = self.read_bytes(size)
+                    gamma = self.read_bytes(size)
+                    mean = self.read_bytes(size)
+                    var = self.read_bytes(size)
 
                     weights = norm_layer.set_weights([gamma, beta, mean, var])
 
-                    # collecting weights and biases of the conv layer with out bnorm
-                # collecring weights for the conv layer with bnorm layer
+                # collecring weights for the conv layer without bnorm layer
                 if len(conv_layer.get_weights()) > 1:
                     bias = self.read_bytes(np.prod(conv_layer.get_weights()[1].shape))
                     kernel = self.read_bytes(np.prod(conv_layer.get_weights()[0].shape))
@@ -222,13 +211,12 @@ class WeightReader:
                     kernel = kernel.transpose([2, 3, 1, 0])
                     conv_layer.set_weights([kernel])
             except ValueError:
-                print("no convolution #" + str(i))  # this stands for residuals in the skip connection concept
+                print("no convolution #" + str(i))
 
     def reset(self):
         self.offset = 0
 
 
-# YOLOV3 adopt logistic regression at the end rather than the softmax in old version
 # implementing sigmoid function
 def _sigmoid(x):
     return 1. / (1. + np.exp(-x))
@@ -263,19 +251,17 @@ class BoundBox:
 
 # function to decode Yolo network output
 def decode_netout(netout, anchors, obj_thresh, net_h, net_w):
-    grid_h, grid_w = netout.shape[:2]  # height and width of the prediction
-    nb_box = 3  # no of bounding boxes per grid cell
-    netout = netout.reshape((grid_h, grid_w, nb_box, -1))  # last dimension => 5+class probabilities
-    nb_class = netout.shape[-1] - 5  # no of classes
+    grid_h, grid_w = netout.shape[:2]
+    nb_box = 3
+    netout = netout.reshape((grid_h, grid_w, nb_box, -1))
+    nb_class = netout.shape[-1] - 5
 
     boxes = []
 
-    netout[..., :2] = _sigmoid(netout[..., :2])  # (x,y) of all the anchors in prediction
-    netout[..., 4:] = _sigmoid(netout[..., 4:])  # objecness+class prob of all the anchor boxes
-    netout[..., 5:] = netout[..., 4][..., np.newaxis] * netout[...,
-                                                        5:]  # element wise multiplication of the objectness with classprob to calculate score for each object class
-    netout[..., 5:] *= netout[...,
-                       5:] > obj_thresh  # eliminating classes which have scores less than the threshold value
+    netout[..., :2] = _sigmoid(netout[..., :2])
+    netout[..., 4:] = _sigmoid(netout[..., 4:])
+    netout[..., 5:] = netout[..., 4][..., np.newaxis] * netout[..., 5:]
+    netout[..., 5:] *= netout[..., 5:] > obj_thresh
 
     for i in range(grid_h * grid_w):
         # iterate over each gridcell in each epoch
@@ -283,29 +269,23 @@ def decode_netout(netout, anchors, obj_thresh, net_h, net_w):
         col = i % grid_w
 
         for b in range(nb_box):
-            # objectness is the 4th element of each bounding box vector(1box has 85 elements)
+
             objectness = netout[int(row)][int(col)][b][4]
 
-            # extract bounding box only if the objectness is above the threshold else continue
             if (objectness <= obj_thresh).all(): continue
 
-            # (x,y,w,h) are the first 4 elements
             x, y, w, h = netout[int(row)][int(col)][b][:4]
 
-            # b_x = sigmoid(t_x)+c_x & b_y = sigmoid(t_y)+c_y
-            x = (
-                            col + x) / grid_w  # centre x value of gridcell w.r.t image width=>[0,1](it is w.r.t gridcell in the prediction)
-            y = (row + y) / grid_h  # centre y value of gridcell w.r.t image height=>[0,1]
-            # b_w = P_w * exp(t_w) & b_h = p_h*exp(t_h)
-            w = anchors[2 * b + 0] * np.exp(w) / net_w  # w.r.t network input image width=>[0,1]
-            h = anchors[2 * b + 1] * np.exp(h) / net_h  # w.r.t network input image height=>[0,1]
+            x = (col + x) / grid_w
+            y = (row + y) / grid_h
+            w = anchors[2 * b + 0] * np.exp(w) / net_w
+            h = anchors[2 * b + 1] * np.exp(h) / net_h
 
             # last 80 elements are class probabilities
             classes = netout[int(row)][col][b][5:]
 
             box = BoundBox(x - w / 2, y - h / 2, x + w / 2, y + h / 2, objectness, classes)
             # box = BoundBox(x-w/2, y-h/2, x+w/2, y+h/2, None, classes)
-
             boxes.append(box)
 
     return boxes  # all the boxes in all a particular scale predictions are in this list
@@ -313,9 +293,6 @@ def decode_netout(netout, anchors, obj_thresh, net_h, net_w):
 
 # function to get bboxes w.r.t actual image dimension
 def correct_yolo_boxes(boxes, image_h, image_w, net_h, net_w):
-    # initially figuring out the variations in the width and height ration
-    # of the input image w.r.t the actual image; this can be used to calculate
-    # offset and scaling necessary to compensate these variations
     if (float(net_w) / image_w) < (float(net_h) / image_h):
         new_w = net_w
         new_h = (image_h * net_w) / image_w
@@ -327,8 +304,6 @@ def correct_yolo_boxes(boxes, image_h, image_w, net_h, net_w):
         x_offset, x_scale = (net_w - new_w) / 2. / net_w, float(new_w) / net_w
         y_offset, y_scale = (net_h - new_h) / 2. / net_h, float(new_h) / net_h
 
-        # calculating the (x,y) min and max values in the the actual image considering
-        # scale and offset
         boxes[i].xmin = int((boxes[i].xmin - x_offset) / x_scale * image_w)
         boxes[i].xmax = int((boxes[i].xmax - x_offset) / x_scale * image_w)
         boxes[i].ymin = int((boxes[i].ymin - y_offset) / y_scale * image_h)
@@ -337,36 +312,34 @@ def correct_yolo_boxes(boxes, image_h, image_w, net_h, net_w):
 
 # non-max suppression to avoid multiple boxes detecting same object
 
-# this function calculate the intersection width(about x) or height(y axis )
-# as per the input argument passed from bbox_iou function
 def _interval_overlap(interval_a, interval_b):
     x1, x2 = interval_a
     x3, x4 = interval_b
 
     if x3 < x1:
         if x4 < x1:
-            return 0  # no overlap
+            return 0
         else:
-            return min(x2, x4) - x1  # returns overlap w or h
+            return min(x2, x4) - x1
     else:
         if x2 < x3:
-            return 0  # no overlap
+            return 0
         else:
-            return min(x2, x4) - x3  # returns overlap width or height
+            return min(x2, x4) - x3
 
 
 def bbox_iou(box1, box2):
     intersect_w = _interval_overlap([box1.xmin, box1.xmax], [box2.xmin, box2.xmax])
     intersect_h = _interval_overlap([box1.ymin, box1.ymax], [box2.ymin, box2.ymax])
 
-    intersect = intersect_w * intersect_h  # calculate area of intersection
+    intersect = intersect_w * intersect_h
 
     w1, h1 = box1.xmax - box1.xmin, box1.ymax - box1.ymin
     w2, h2 = box2.xmax - box2.xmin, box2.ymax - box2.ymin
 
-    union = w1 * h1 + w2 * h2 - intersect  # calculates union area
+    union = w1 * h1 + w2 * h2 - intersect
 
-    return float(intersect) / union  # returns IoU
+    return float(intersect) / union
 
 
 def do_nms(boxes, nms_thresh):
@@ -376,11 +349,6 @@ def do_nms(boxes, nms_thresh):
     else:
         return
 
-    # from the list of Bboxes detected go to a specific class and find the
-    # highest probability bbox(by sort in descending order)
-    # then compare the IoU of all other boxes w.r.t this highest prob bbox
-    # and suppress/ignore all bboxes having IoU >= the nms_thresh
-    # note that this will not effect mulitple object detection considering its IoU wont be >= nms-thresh
     for c in range(nb_class):
         sorted_indices = np.argsort([-box.classes[c] for box in boxes])
 
@@ -428,42 +396,27 @@ def draw_boxes(image, boxes, labels, obj_threshold):
 def process(image_name):
     # defining the model based on the above YOLOV3 model function
     model = make_yolov3_model()
-
-    # loading the weights into the YOLO model created
-    # first instantiate an object of the WeightReader class also pass the weight file as an input argument
     weight_reader = WeightReader('yolov3.weights')
-
-    # Now load the weights using set_weights methods inside the class
     weight_reader.load_weights(model)
 
-    # saving the actual heigh and width of the image to rescale the detected
-    # bounding boxes to the size suitable to objects in the actual image
+    # saving the actual heigh and width of the image
     image = load_img(image_name)
     image_w, image_h = image.size
-    # YOLOmodel desired input shape
     input_w, input_h = 416, 416
 
     # image preprocessing
-    # loading a sample image and resizing it into the YOLOmodel desired shape
     image = load_img(image_name, target_size=(input_w, input_h))
-    # PythonImageLibrary format is to be converted into a numpy array
     image = img_to_array(image)
-    # setting numpy array data type as float32
     image = image.astype('float32')
-    # normalise the pixel values to be bounded between 0 and 1
     image /= 255.0
     image = image[None, :, :, :]
-    # predict output for the loaded numpy array image
+
     prediction = model.predict(image)
-    # Getting shape of the predicted arrays
     print([a.shape for a in prediction])
 
     # postprocessing
-    # define the anchors for 3 scale predictions(3lists). Each scale prediction has
-    # 3 anchor boxes and each box is represented by its (h,w) pairs{=> 6 elements in 1 list}
     anchors = [[116, 90, 156, 198, 373, 326], [30, 61, 62, 45, 59, 119], [10, 13, 16, 30, 33, 23]]
 
-    # defining the probability threshold for detected objects
     obj_threshold = 0.6
 
     boxes = list()
@@ -471,19 +424,12 @@ def process(image_name):
     for i in range(len(prediction)):
         # decoding the network output
         boxes += decode_netout(prediction[i][0], anchors[i], obj_threshold, input_h, input_w)
-        # returns a big single list of bounding box objects which are instances of
-        # BoundBox class which has the attributes the x and y corners(can be thought as the image (x,y) min and max intercepts on x,y axises)
-        # w.r.t input image shape
-        # and also the class probabilities
 
     # using the correct yolo box function
     correct_yolo_boxes(boxes, image_h, image_w, input_h, input_w)
-    # returns bounding boxes having dimensions w.r.t actual image
 
     # execute non-max suppression
     do_nms(boxes, nms_thresh=0.5)
-    # returns all the boxes but with class probability set to zero for
-    # the bboxes to be ignored
 
     # defining the labels of coco dataset
     labels = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", \
@@ -499,10 +445,9 @@ def process(image_name):
 
     # load image for drawing bounding boxes
     img = plt.imread(image_name)
-    # draw bounding boxes on the actual image and display labels and class prob
     draw_boxes(img, boxes, labels, obj_threshold)
 
 
 if __name__ == "__main__":
-    image_name = 'zebra.jpg'
+    image_name = 'im5.jpeg'
     process(image_name)
