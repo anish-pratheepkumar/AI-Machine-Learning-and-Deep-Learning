@@ -10,7 +10,7 @@
 ## SelfProjects
 * [ObjectDetecton](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/SelfProjects/ObjectDetection) - YOLOV3
 
-
+* [ImageRcognition](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/SelfProjects/ImageRcognition/AlexNet) - AlexNet
 
 
 
