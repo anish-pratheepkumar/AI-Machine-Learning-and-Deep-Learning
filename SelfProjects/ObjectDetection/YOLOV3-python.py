@@ -1,10 +1,13 @@
 """
 Created on Sat May 16 21:07:15 2020
 
-@author: anish pratheepkumar
+Implementation of YOLOV3-experiencor version in Keras
 
-This is a work to implement and understand the experiencor version
-of YOLOV3 in Keras (Ref: https://github.com/experiencor/keras-yolo3)
+YoloV3 Paper : https://pjreddie.com/media/files/papers/YOLOv3.pdf
+YoloV1 Paper : https://arxiv.org/pdf/1506.02640.pdf
+Ref: https://github.com/experiencor/keras-yolo3
+
+@author: anish pratheepkumar
 """
 
 import struct
