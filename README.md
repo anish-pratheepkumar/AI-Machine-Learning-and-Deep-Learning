@@ -7,6 +7,11 @@
 
 * [MachineLearning](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning)- algorithms implementation on data with **python(using NumPy, Pandas, Scikit-Learn etc.)**
 
+  - [Linear Regression](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning/01-LinearRegression)
+  - [Logistic Regression](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning/02-LogisticRegression)
+  - [Decision Tree and Random Forest](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning/03-DecisionTrees%26RandomForest)
+  - [KNN](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/MachineLearning/04-KNN)
+
 ## SelfProjects
 * [ObjectDetecton](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/SelfProjects/ObjectDetection) - YOLOV3
 
