@@ -17,7 +17,8 @@
 
 * [ImageRecognition](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/SelfProjects/ImageRecognition/AlexNet) - AlexNet
 
-
+## Studienarbeit
+[Autonomous Track Navigation of a Quadcopter using Deep Convolutional Neural Networks: Simulation-based evaluation ](https://github.com/anish-pratheepkumar/AI-Machine-Learning-and-Deep-Learning/tree/master/Studienarbeit)
 
 
 
