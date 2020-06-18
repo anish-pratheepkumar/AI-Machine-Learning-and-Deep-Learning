@@ -107,7 +107,7 @@ running instructions:
 * open python file - 00_Quad_BuiltinPath_Follow.py
 * run any one of the CoppeliaSim scene first and then the python file. (After running once for a Scene, restart the python kernel before running the file for next CoppeliaSim scene)
 
-### 05_NN_Training_and_Evaluation
+### 04_NN_Training_and_Evaluation
 
 This directory consists of Jupyter notebook files for network design, fine-tuning and evaluation
 
@@ -123,6 +123,6 @@ This directory consists of Jupyter notebook files for network design, fine-tunin
 
   - 03_ConfusionMat_Cls Report.ipynb
   
-### 06_Model
+### 05_Model
 
 * consists of HDF5 file with model+trained weights
