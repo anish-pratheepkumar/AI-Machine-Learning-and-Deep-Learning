@@ -4,8 +4,8 @@
 
 ## Operating System
 
-Ubuntu 16.04 LTS (Xenial Xersus) and 
-Windows 10 (for solidworks 3Dmodel)
+* Main OS - Ubuntu 16.04 LTS (Xenial Xersus)
+* Windows 10 (only for solidworks 3Dmodel)
 
 ## Softwares and tools
 
