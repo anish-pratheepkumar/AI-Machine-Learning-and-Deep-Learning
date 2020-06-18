@@ -104,8 +104,8 @@ running instructions:
 running instructions:
 
 * open CoppeliaSim scenes - 03_Quad_Auto_PathFollow_TrainTrack.ttt
-* open python file - 00_Quad_BuiltinPath_Follow.py
-* run any one of the CoppeliaSim scene first and then the python file. (After running once for a Scene, restart the python kernel before running the file for next CoppeliaSim scene)
+* open python file - 02_Quad_Auto_PathFollow.py
+* run the CoppeliaSim scene first and then the python file. (After running once for a Scene, restart the python kernel before running the file for next CoppeliaSim scene)
 
 ### 04_NN_Training_and_Evaluation
 
